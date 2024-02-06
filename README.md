@@ -1,71 +1,47 @@
-# TikTok CCS Category Scoring Tool
+# Loan Interest Rate Prediction App
 
 ## Overview
 
-This tool is designed to analyze and rank TikTok category, age, and gender combinations for a list of GLOBAL_IDs. It integrates multiple data sources and utilizes various ranking methodologies including raw counts, random forest, and TF-IDF.
+This Loan Interest Rate Prediction App is designed to help users predict interest rates on loans based on borrower and loan information. It utilises a trained model to offer predictions directly within a web interface built with Streamlit.
 
 ## Features
 
-- Parses command line arguments for configuration.
-- Reads and processes data from CSV and JSON files.
-- Applies different ranking methods: raw counts, random forest, and TF-IDF.
-- Maps TikTok IDs to category names.
-- Augments data with TikTok reach information.
-- Outputs the results in a specified CSV file.
+- Predict loan interest rates using borrower's loan information.
+- Upload borrower data in CSV format for predictions.
+- Download the predictions appended to the uploaded data.
 
-## Usage
+## How to Use
 
-Run the script with the desired arguments:
+1. Navigate to the Streamlit app URL.
+2. Upload your data as a CSV file by clicking on the "Upload your input CSV file" button.
+3. The app will display a preview of the uploaded file.
+4. Click on "Predict" to generate interest rate predictions, which will be added to the DataFrame and displayed.
+5. Download the DataFrame with predictions by clicking on the provided link.
 
-```bash
-python tiktok_pipeline.py --reach_threshold [value] --top_n [value] --ranking_type [type] --audience_builder_csv_file_path [path] --json_tiktok_to_css_file_path [path] --output_file_path [path] --tiktok_categories_csv_path [path]
-```
+## Model Information
 
-## Arguments
+The prediction model is an XGBoost model trained on loan data, saved as `xgb_loan_rate_predictor.pkl`. It predicts interest rates based on various loan and borrower characteristics.
 
-- `--reach_threshold`: The minimum reach threshold for filtering data.
-- `--top_n`: Number of top attribute combinations to consider.
-- `--ranking_type`: Type of ranking ('raw_counts', 'random_forest', or 'tf_idf').
-- `--audience_builder_csv_file_path`: Path to the audience builder CSV file.
-- `--json_tiktok_to_css_file_path`: Path to the TikTok to CCS JSON file.
-- `--output_file_path`: Path for the output CSV file.
-- `--tiktok_categories_csv_path`: Path to the TikTok categories CSV file.
+## Preprocessing Steps
 
-Make sure `TIKTOK_ACCESS_TOKEN` and `TIKTOK_ADVERTISER_ID` are set in the environment.
+Data preprocessing includes:
 
-There are different methods for ranking and scoring TikTok category, age, and gender combinations. Here's a breakdown of each method:
+- Encoding categorical features using `LabelEncoder`.
+- Standardizing numerical features with `StandardScaler`.
+- Keeping specified features for prediction.
 
-1. **Raw Counts**:
-   - This method simply counts the occurrences of each combination of TikTok category, age, and gender in the data.
-   - The `apply_combinations` function generates these counts by iterating through the DataFrame and tallying each unique combination.
-   - The counts are then normalized and sorted, with the top `n` combinations (as specified by the `--top_n` argument) being selected.
-   - This method is straightforward and effective for identifying the most frequent combinations but doesn't account for the uniqueness or significance of each combination beyond its frequency.
+## Prediction and Download
 
-2. **Random Forest**:
-   - The Random Forest method uses a machine learning approach. It is slow and may run up to 30 minutes to complete. Its results are similar to TF-IDF which runs in less than a minute.
-   - It first encodes the data using one-hot encoding for categorical variables (like TikTok category, age, and gender) and label encoding for the target variable (GLOBAL_IDs).
-   - The RandomForestClassifier from scikit-learn is trained on this data.
-   - The importance of each feature (i.e., each TikTok category, age, and gender combination) is then extracted from the model.
-   - The `calculate_random_forest_scores` function maps these importances back to the original features, calculates a composite score for each combination, and selects the top `n` scores.
-   - This method considers the influence of each combination on the model's ability to classify the GLOBAL_IDs, offering a more nuanced understanding of the data's structure.
+After processing the uploaded data, predictions are made and appended to the uploaded DataFrame. Users can download the result as a CSV file.
 
-3. **TF-IDF (Term Frequency-Inverse Document Frequency)**:
-   - TF-IDF is a statistical measure used to evaluate the importance of a word or combination of words within a dataset. It is used by default.
-   - The `calculate_tf_idf` function first calculates the term frequency (TF) for each TikTok category, age, and gender combination.
-   - It then calculates the inverse document frequency (IDF) for each combination, which diminishes the weight of combinations that occur too commonly across all documents (GLOBAL_IDs).
-   - The TF and IDF scores are multiplied to obtain the TF-IDF score for each combination.
-   - This method is effective in identifying combinations that are both frequent and uniquely significant across the dataset, providing a balance between raw frequency and uniqueness.
+## Developer Notes
 
-Each of these methods offers a different perspective on the data, with raw counts focusing on sheer frequency, random forest providing insights based on a machine learning model, and TF-IDF balancing frequency with uniqueness.
+- Adjust the path to the model file as needed.
+- Customize categorical and numerical features based on your model's training.
+- The app's functionality can be extended or modified according to specific requirements.
 
-## Contributing
+### Quick Start
 
-Contributions are welcome. Please open an issue or submit a pull request with your changes.
+Clone this repository, install the dependencies, and run the Streamlit app using `streamlit run app.py --server.enableXsrfProtection=false --server.port=7860`.
 
-## License
-
-(C) 2024 Dentsu London Ltd. All rights reserved.
-
-## Contact
-
-For more information or support, please contact <roman.svetkin@dentsu.com>.
+---

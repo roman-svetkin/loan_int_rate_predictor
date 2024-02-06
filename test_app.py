@@ -13,7 +13,7 @@ from app import (
 
 pd.options.mode.copy_on_write = True
 
-input_df = pd.read_csv("DataScienceAssignment_test.csv")
+input_df = pd.read_csv("test.csv")
 
 input_preprocessed_df = input_df.copy()
 input_preprocessed_df = input_preprocessed_df[cols_to_keep]

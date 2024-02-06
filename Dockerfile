@@ -23,6 +23,6 @@ RUN python -m pip install --upgrade pip setuptools wheel
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
 # Expose the port that the application listens on.
-EXPOSE 8080
+EXPOSE 7860
 
-CMD streamlit run app.py --server.enableXsrfProtection=false 
+CMD streamlit run app.py --server.enableXsrfProtection=false --server.port=7860
