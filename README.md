@@ -12,7 +12,7 @@ This Loan Interest Rate Prediction App is designed to help users predict interes
 
 ## How to Use
 
-1. Navigate to the Streamlit app URL.
+1. Navigate to the Streamlit app URL - <https://loan-predictor.streamlit.app/>
 2. Upload your data as a CSV file by clicking on the "Upload your input CSV file" button.
 3. The app will display a preview of the uploaded file.
 4. Click on "Predict" to generate interest rate predictions, which will be added to the DataFrame and displayed.
