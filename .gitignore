@@ -6,7 +6,6 @@ sftp_extracts/
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
-*.ipynb
 *.pem
 *_token.txt
 *.zip
