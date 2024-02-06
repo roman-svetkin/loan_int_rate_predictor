@@ -78,7 +78,7 @@ def download_link(
 def predict(input_data: np.ndarray) -> np.ndarray:
     """
     Make a prediction using the trained model.
-    
+
     Note: input_data is expected to be a NumPy array after preprocessing.
     """
     # Assuming input_data is already prepared as a NumPy array for prediction
@@ -90,7 +90,7 @@ st.title("Loan Interest Rate Prediction App")
 
 st.markdown(
     """
-This app allows you to predict loan interest rates based on your loan and borrower information. 
+This app allows you to predict loan interest rates based on your loan and borrower information.
 Please upload your data as a CSV file. Ensure your data includes the necessary features that the model expects.
 """
 )
@@ -138,4 +138,3 @@ if uploaded_file is not None:
 
 else:
     st.write("Please upload a file to begin.")
-    

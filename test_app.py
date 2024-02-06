@@ -1,7 +1,15 @@
-import pytest
-from app import predict, download_link, categorical_cols, cols_to_keep, le, x_cols, scaler
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from app import (
+    categorical_cols,
+    cols_to_keep,
+    download_link,
+    le,
+    predict,
+    scaler,
+    x_cols,
+)
 
 pd.options.mode.copy_on_write = True
 
@@ -30,17 +38,20 @@ def test_predict():
 
     # Call the predict function
     predictions = predict(input_preprocessed_df)
-    
+
     # Check if predictions are returned as expected
-    assert isinstance(predictions, np.ndarray), "Predictions should be returned as an array"
+    assert isinstance(
+        predictions, np.ndarray
+    ), "Predictions should be returned as an array"
     assert len(predictions) > 0, "Should return a non-empty series of predictions"
     assert int(predictions[0]) == 10
-    
+
 
 preds = predict(input_preprocessed_df)
 
 # Append predictions to the DataFrame
 input_df["Predicted Interest Rate"] = preds
+
 
 def test_download_link() -> None:
     """
@@ -49,6 +60,6 @@ def test_download_link() -> None:
     """
     # Call the download_link function
     link = download_link(input_df, "predictions.csv", "Download Predictions")
-    
+
     # Check if the link is correctly formatted
     assert "predictions.csv" in link, "The download link should be correctly formatted"
